@@ -1,0 +1,56 @@
+[
+  {
+    "line_id": "L3",
+    "sensor": "filler_speed_bpm",
+    "detected_at": "2026-09-21T04:28:00",
+    "value": 499.6,
+    "baseline_mean": 599.3,
+    "z_score": -14.6,
+    "error_code_seen": null
+  },
+  {
+    "line_id": "L2",
+    "sensor": "vibration_mm_s",
+    "detected_at": "2026-09-21T07:05:00",
+    "value": 2.73,
+    "baseline_mean": 1.98,
+    "z_score": 4.2,
+    "error_code_seen": null
+  },
+  {
+    "line_id": "L1",
+    "sensor": "temperature_c",
+    "detected_at": "2026-09-22T04:54:00",
+    "value": 5.58,
+    "baseline_mean": 4.09,
+    "z_score": 4.6,
+    "error_code_seen": null
+  },
+  {
+    "line_id": "L2",
+    "sensor": "pressure_bar",
+    "detected_at": "2026-09-22T18:41:00",
+    "value": 3.22,
+    "baseline_mean": 3.49,
+    "z_score": -5.4,
+    "error_code_seen": null
+  },
+  {
+    "line_id": "L3",
+    "sensor": "temperature_c",
+    "detected_at": "2026-09-22T23:04:00",
+    "value": 5.43,
+    "baseline_mean": 4.08,
+    "z_score": 4.9,
+    "error_code_seen": null
+  },
+  {
+    "line_id": "L1",
+    "sensor": "filler_speed_bpm",
+    "detected_at": "2026-09-22T23:47:00",
+    "value": 549.9,
+    "baseline_mean": 599.32,
+    "z_score": -6.4,
+    "error_code_seen": null
+  }
+]
