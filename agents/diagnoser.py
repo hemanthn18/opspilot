@@ -51,8 +51,38 @@ class Diagnosis(BaseModel):
         return max(0.0, min(1.0, value))
 
 
+LOGS_PATH = ROOT / "data" / "logs.jsonl"
+TREND_WINDOW = 15      # minutes of history (short enough to capture the active trend)
+PROJECTION_MIN = 60    # how far ahead to project
+
+
+def get_trend(anomaly: dict) -> dict:
+    """Feature engineering: slope of the recent readings and a projection ahead."""
+    values = []
+    with open(LOGS_PATH) as fh:
+        for raw in fh:
+            r = json.loads(raw)
+            if r["line_id"] == anomaly["line_id"] and r["ts"] <= anomaly["detected_at"]:
+                values.append(r[anomaly["sensor"]])
+    values = values[-TREND_WINDOW:]
+    n = len(values)
+    # Least-squares linear regression slope (units per minute)
+    x_mean, y_mean = (n - 1) / 2, sum(values) / n
+    slope = sum((i - x_mean) * (v - y_mean) for i, v in enumerate(values)) / sum((i - x_mean) ** 2 for i in range(n))
+    return {
+        "start_value": round(values[0], 2),
+        "current_value": round(values[-1], 2),
+        "slope_per_min": round(slope, 3),
+        "projected_value": round(values[-1] + slope * PROJECTION_MIN, 2),
+    }
+
+
 SYSTEM_PROMPT = """You are a maintenance diagnostics agent for a beverage bottling plant.
 Use ONLY the manual excerpts provided. Do not use outside knowledge.
+The Watcher detects faults EARLY, often before values cross manual thresholds.
+Use the trend and projected value: if the trend is clearly heading toward a failure
+mode documented in the excerpts, diagnose that failure mode as an early-stage fault
+with moderate confidence, and say it is early-stage in root_cause.
 If the excerpts do not explain the anomaly, set likely_error_code to "UNKNOWN",
 confidence below 0.3, and recommend human inspection.
 Always cite the excerpt ids you used in "sources", copied exactly as shown in square brackets."""
@@ -66,13 +96,16 @@ def diagnose(anomaly: dict) -> Diagnosis:
     hits = search(query, k=3)
     excerpts = "\n\n".join(f"[{h['id']}]\n{h['text']}" for h in hits)
 
-    # 3) Generation, grounded in the retrieved text
+    # 3) Generation, grounded in the retrieved text + trend context
+    trend = get_trend(anomaly)
     user_prompt = f"""Anomaly detected by the Watcher:
 - Line: {anomaly['line_id']}
 - Sensor: {anomaly['sensor']}
 - Current value: {anomaly['value']} (normal baseline about {anomaly['baseline_mean']})
 - z-score: {anomaly['z_score']}
 - Machine error code raised yet: {anomaly['error_code_seen'] or 'none'}
+- Trend over last {TREND_WINDOW} min: {trend['start_value']} -> {trend['current_value']} ({trend['slope_per_min']:+} per min)
+- Projected value in {PROJECTION_MIN} min if the trend continues: {trend['projected_value']}
 
 Manual excerpts:
 {excerpts}"""
