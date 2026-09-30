@@ -4,3 +4,5 @@ __pycache__/
 *.db
 .DS_Store
 data/index.json
+.agents/
+.claude/
