@@ -12,12 +12,12 @@ import json
 import sys
 from pathlib import Path
 
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from tools.llm import chat  # noqa: E402
+from tools.llm import chat_structured  # noqa: E402
 from tools.rag import search  # noqa: E402
 
 SENSOR_WORDS = {
@@ -32,21 +32,30 @@ class Diagnosis(BaseModel):
     """The contract the LLM must follow (structured output)."""
     likely_error_code: str = Field(description="e.g. E-214, or UNKNOWN")
     root_cause: str
-    confidence: float = Field(ge=0, le=1)
+    confidence: float = Field(description="0.0 to 1.0")
     recommended_actions: list[str]
-    spare_part: str | None = None
-    estimated_repair_hours: float | None = None
-    sources: list[str] = Field(description="ids of the manual sections used")
+    spare_part: str | None
+    estimated_repair_hours: float | None
+    sources: list[str] = Field(description="ids of the manual sections used, copied exactly")
+
+    # Defensive parsing: accept a single string where a list is expected
+    @field_validator("recommended_actions", "sources", mode="before")
+    @classmethod
+    def string_to_list(cls, value):
+        return [value] if isinstance(value, str) else value
+
+    # Keep confidence inside 0..1 even if the model drifts
+    @field_validator("confidence")
+    @classmethod
+    def clamp_confidence(cls, value):
+        return max(0.0, min(1.0, value))
 
 
 SYSTEM_PROMPT = """You are a maintenance diagnostics agent for a beverage bottling plant.
 Use ONLY the manual excerpts provided. Do not use outside knowledge.
 If the excerpts do not explain the anomaly, set likely_error_code to "UNKNOWN",
 confidence below 0.3, and recommend human inspection.
-Always cite the excerpt ids you used in "sources".
-Reply with a JSON object with exactly these keys:
-likely_error_code, root_cause, confidence, recommended_actions, spare_part,
-estimated_repair_hours, sources."""
+Always cite the excerpt ids you used in "sources", copied exactly as shown in square brackets."""
 
 
 def diagnose(anomaly: dict) -> Diagnosis:
@@ -68,19 +77,20 @@ def diagnose(anomaly: dict) -> Diagnosis:
 Manual excerpts:
 {excerpts}"""
 
-    response = chat(
-        [{"role": "system", "content": SYSTEM_PROMPT},
-         {"role": "user", "content": user_prompt}],
-        response_format={"type": "json_object"},  # JSON mode
-    )
-    raw = response.choices[0].message.content
+    messages = [{"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt}]
 
-    # 4) Validate: never trust LLM output blindly
+    # 4) Structured Outputs: the API enforces the Diagnosis schema,
+    #    then Pydantic validates again (never trust LLM output blindly)
     try:
-        diagnosis = Diagnosis.model_validate_json(raw)
-    except ValidationError as err:
-        return Diagnosis(likely_error_code="UNKNOWN", root_cause=f"Invalid model output: {err.errors()[0]['msg']}",
-                         confidence=0.0, recommended_actions=["Escalate to a maintenance engineer"], sources=[])
+        diagnosis, raw = chat_structured(messages, Diagnosis)
+        if diagnosis is None:
+            raise ValueError(f"model refused or returned nothing: {raw}")
+    except (ValidationError, ValueError) as err:
+        print(f"  [warn] invalid model output: {err}")
+        return Diagnosis(likely_error_code="UNKNOWN", root_cause="Invalid model output",
+                         confidence=0.0, recommended_actions=["Escalate to a maintenance engineer"],
+                         spare_part=None, estimated_repair_hours=None, sources=[])
 
     # Guardrail: citations must be sections we actually retrieved
     retrieved_ids = {h["id"] for h in hits}

@@ -10,15 +10,20 @@
       "error_code_seen": null
     },
     "diagnosis": {
-      "likely_error_code": "UNKNOWN",
-      "root_cause": "Invalid model output: Input should be a valid array",
-      "confidence": 0.0,
+      "likely_error_code": "E-402",
+      "root_cause": "Possible infeed starvation or jam causing the filler speed to drop significantly, likely due to containers jammed at the starwheel or conveyor issues.",
+      "confidence": 0.8,
       "recommended_actions": [
-        "Escalate to a maintenance engineer"
+        "Inspect the starwheel area for jammed or damaged containers.",
+        "Check conveyor chain and guide rails for wear or misalignment.",
+        "Verify that the upstream depalletizer is operating correctly."
       ],
       "spare_part": null,
-      "estimated_repair_hours": null,
-      "sources": []
+      "estimated_repair_hours": 1.5,
+      "sources": [
+        "past_incidents.md#INC-2026-017 - Line 2 - Speed drop",
+        "conveyor_system.md#Error code E-402: Infeed starvation / jam"
+      ]
     }
   },
   {
@@ -33,14 +38,19 @@
     },
     "diagnosis": {
       "likely_error_code": "UNKNOWN",
-      "root_cause": "Invalid model output: Input should be a valid array",
-      "confidence": 0.0,
+      "root_cause": "The vibration value of 2.73 mm/s is elevated compared to the baseline of 1.98 but still below the 3.0 mm/s RMS threshold for normal operation, and no machine error code has been raised yet. The manual does not specify an error code or action for vibration values in this range without other symptoms.",
+      "confidence": 0.2,
       "recommended_actions": [
-        "Escalate to a maintenance engineer"
+        "Monitor the vibration levels closely for any further increase.",
+        "Inspect the main drive bearings for early signs of wear or lubrication issues as a precaution.",
+        "Check for any misalignment or loose mounting bolts if vibration increases."
       ],
       "spare_part": null,
       "estimated_repair_hours": null,
-      "sources": []
+      "sources": [
+        "filler_bearings.md#Error code E-331: Vibration high",
+        "filler_bearings.md#Normal operation"
+      ]
     }
   },
   {
@@ -54,15 +64,20 @@
       "error_code_seen": null
     },
     "diagnosis": {
-      "likely_error_code": "UNKNOWN",
-      "root_cause": "Invalid model output: Input should be a valid array",
-      "confidence": 0.0,
+      "likely_error_code": "E-214",
+      "root_cause": "Possible glycol pump failure or low refrigerant in the chiller system causing elevated product temperature.",
+      "confidence": 0.8,
       "recommended_actions": [
-        "Escalate to a maintenance engineer"
+        "Check glycol pump operation and seals for leaks or failure.",
+        "Inspect refrigerant levels and compressor status in the chiller system.",
+        "Examine plate heat exchanger for fouling or reduced heat transfer efficiency."
       ],
-      "spare_part": null,
-      "estimated_repair_hours": null,
-      "sources": []
+      "spare_part": "GP-220 (glycol pump seal kit)",
+      "estimated_repair_hours": 2.5,
+      "sources": [
+        "chiller_system.md#Error code E-214: Product temperature high",
+        "past_incidents.md#INC-2025-031 - Line 1 - Warm product"
+      ]
     }
   },
   {
@@ -76,15 +91,21 @@
       "error_code_seen": null
     },
     "diagnosis": {
-      "likely_error_code": "UNKNOWN",
-      "root_cause": "Invalid model output: Input should be a valid array",
-      "confidence": 0.0,
+      "likely_error_code": "E-118",
+      "root_cause": "Leak at a CO2 line fitting or regulator diaphragm causing low CO2 pressure below 3.2 bar.",
+      "confidence": 0.9,
       "recommended_actions": [
-        "Escalate to a maintenance engineer"
+        "Check bulk tank CO2 level first.",
+        "Leak-test fittings with soapy water; tighten or replace fittings as needed.",
+        "Replace regulator diaphragm if pressure drifts after tightening fittings."
       ],
-      "spare_part": null,
-      "estimated_repair_hours": null,
-      "sources": []
+      "spare_part": "regulator diaphragm kit (part CR-45)",
+      "estimated_repair_hours": 1.0,
+      "sources": [
+        "carbonation_co2.md#Error code E-118: CO2 pressure low",
+        "carbonation_co2.md#Recommended actions",
+        "past_incidents.md#INC-2026-004 - Line 2 - Flat product"
+      ]
     }
   },
   {
@@ -98,15 +119,21 @@
       "error_code_seen": null
     },
     "diagnosis": {
-      "likely_error_code": "UNKNOWN",
-      "root_cause": "Invalid model output: Input should be a valid array",
-      "confidence": 0.0,
+      "likely_error_code": "E-214",
+      "root_cause": "Possible early stage of chiller system malfunction such as low refrigerant, compressor trip, glycol pump failure, or fouled plate heat exchanger causing product temperature to rise above normal baseline.",
+      "confidence": 0.8,
       "recommended_actions": [
-        "Escalate to a maintenance engineer"
+        "Check chiller refrigerant levels and compressor status.",
+        "Inspect glycol pump operation and seals for leaks or failure.",
+        "Examine plate heat exchanger for fouling or blockage and clean if necessary.",
+        "Monitor temperature closely to detect further rise and trigger error code E-214 if temperature exceeds 5 C."
       ],
       "spare_part": null,
-      "estimated_repair_hours": null,
-      "sources": []
+      "estimated_repair_hours": 2.5,
+      "sources": [
+        "chiller_system.md#Error code E-214: Product temperature high",
+        "past_incidents.md#INC-2025-031 - Line 1 - Warm product"
+      ]
     }
   },
   {
@@ -121,14 +148,20 @@
     },
     "diagnosis": {
       "likely_error_code": "UNKNOWN",
-      "root_cause": "Invalid model output: Input should be a valid array",
-      "confidence": 0.0,
+      "root_cause": "The filler speed is lower than normal but not sharply dropping toward zero, and no error code has been raised. The manual excerpts describe sharp drops to near zero speed or other specific symptoms not matching this anomaly.",
+      "confidence": 0.2,
       "recommended_actions": [
-        "Escalate to a maintenance engineer"
+        "Inspect the filler line for any mechanical obstructions or jams, especially around the starwheel and guide rails.",
+        "Check for any upstream equipment issues that might reduce container feed rate.",
+        "Monitor the filler speed trend to see if it continues to drop or recovers.",
+        "If no mechanical issues are found, escalate to human inspection for further diagnosis."
       ],
       "spare_part": null,
       "estimated_repair_hours": null,
-      "sources": []
+      "sources": [
+        "past_incidents.md#INC-2026-017 - Line 2 - Speed drop",
+        "conveyor_system.md#Error code E-402: Infeed starvation / jam"
+      ]
     }
   }
 ]

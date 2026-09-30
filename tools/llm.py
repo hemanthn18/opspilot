@@ -35,3 +35,16 @@ def embed(texts: list[str]) -> list[list[float]]:
     """Turn a list of texts into embedding vectors."""
     response = client.embeddings.create(model=EMBEDDING_DEPLOYMENT, input=texts)
     return [item.embedding for item in response.data]
+
+
+def chat_structured(messages: list[dict], schema, temperature: float = 0.0):
+    """Structured Outputs: the model is forced to return JSON matching a Pydantic schema.
+    Returns (parsed_object_or_None, raw_text)."""
+    response = client.chat.completions.parse(
+        model=CHAT_DEPLOYMENT,
+        messages=messages,
+        temperature=temperature,
+        response_format=schema,
+    )
+    message = response.choices[0].message
+    return message.parsed, message.content
