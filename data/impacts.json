@@ -1,0 +1,375 @@
+[
+  {
+    "anomaly": {
+      "line_id": "L3",
+      "sensor": "filler_speed_bpm",
+      "detected_at": "2026-09-21T04:28:00",
+      "value": 499.6,
+      "baseline_mean": 599.3,
+      "z_score": -14.6,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-402",
+      "root_cause": "Early-stage infeed starvation or jam at the starwheel likely caused by damaged or fallen containers or misaligned guide rails, leading to a sharp drop in filler speed.",
+      "confidence": 0.75,
+      "recommended_actions": [
+        "Inspect the starwheel area for any jammed or damaged containers.",
+        "Check guide rails for proper adjustment and wear.",
+        "Verify upstream depalletizer operation to ensure it is running.",
+        "Clear any blockages and resume operation cautiously."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 1.0,
+      "sources": [
+        "past_incidents.md#INC-2026-017 - Line 2 - Speed drop",
+        "conveyor_system.md#Error code E-402: Infeed starvation / jam"
+      ]
+    },
+    "impact_report": {
+      "downtime_hours": 1.0,
+      "impact": {
+        "line_id": "L3",
+        "downtime_window": [
+          "2026-09-21T04:28:00",
+          "2026-09-21T05:28:00"
+        ],
+        "lost_cases_by_sku": {
+          "SKU-GING-12G": 1275
+        },
+        "orders_at_risk": []
+      },
+      "summary": "The incident on line L3 causing a 1-hour downtime is estimated to result in a loss of 1275 cases of SKU-GING-12G. Fortunately, there are no customer orders currently at risk due to this disruption. The repair should be prioritized to minimize production loss.",
+      "tool_trace": [
+        {
+          "tool": "estimate_impact",
+          "args": {
+            "line_id": "L3",
+            "start_time": "2026-09-21T04:28:00",
+            "downtime_hours": 1
+          }
+        }
+      ]
+    }
+  },
+  {
+    "anomaly": {
+      "line_id": "L2",
+      "sensor": "vibration_mm_s",
+      "detected_at": "2026-09-21T07:05:00",
+      "value": 2.73,
+      "baseline_mean": 1.98,
+      "z_score": 4.2,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-331",
+      "root_cause": "Early-stage main drive bearing wear or lack of lubrication causing increasing vibration.",
+      "confidence": 0.7,
+      "recommended_actions": [
+        "Inspect main drive bearings for wear or lubrication issues.",
+        "Check drive coupling alignment.",
+        "Verify mounting bolts are tight.",
+        "Monitor vibration levels closely for further increase."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 2.0,
+      "sources": [
+        "filler_bearings.md#Error code E-331: Vibration high",
+        "filler_bearings.md#Normal operation"
+      ]
+    },
+    "impact_report": {
+      "downtime_hours": 2.0,
+      "impact": {
+        "line_id": "L2",
+        "downtime_window": [
+          "2026-09-21T07:05:00",
+          "2026-09-21T09:05:00"
+        ],
+        "lost_cases_by_sku": {
+          "SKU-COLA-2LP": 3506,
+          "SKU-LIME-20P": 1381
+        },
+        "orders_at_risk": [
+          {
+            "order_id": "SO-10044",
+            "customer": "SunGrocer DC 9",
+            "sku": "SKU-COLA-2LP",
+            "qty_cases": 1200,
+            "due_date": "2026-09-21T10:00:00",
+            "short_cases": 797
+          }
+        ]
+      },
+      "summary": "The incident on line L2 starting at 07:05 and lasting 2 hours will result in a loss of 3506 cases of SKU-COLA-2LP and 1381 cases of SKU-LIME-20P. One order at risk is SO-10044 for customer SunGrocer DC 9, with 797 cases short of the 1200 ordered, due by 10:00 on the same day. Immediate repair is critical to minimize impact on this order and overall production.",
+      "tool_trace": [
+        {
+          "tool": "estimate_impact",
+          "args": {
+            "line_id": "L2",
+            "start_time": "2026-09-21T07:05:00",
+            "downtime_hours": 2
+          }
+        }
+      ]
+    }
+  },
+  {
+    "anomaly": {
+      "line_id": "L1",
+      "sensor": "temperature_c",
+      "detected_at": "2026-09-22T04:54:00",
+      "value": 5.58,
+      "baseline_mean": 4.09,
+      "z_score": 4.6,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-214",
+      "root_cause": "Early-stage product temperature rise likely due to glycol pump failure or refrigerant issue in the chiller system, as temperature is steadily increasing and projected to exceed 5 C soon, matching symptoms of E-214 before alarm triggers.",
+      "confidence": 0.75,
+      "recommended_actions": [
+        "Inspect glycol pump operation and seals for leaks or failure.",
+        "Check refrigerant levels and compressor status in the chiller system.",
+        "Clean or inspect plate heat exchanger for fouling if pump and refrigerant are normal.",
+        "Monitor temperature closely to confirm if it continues rising towards alarm threshold."
+      ],
+      "spare_part": "GP-220 seal kit (if glycol pump seal leak confirmed)",
+      "estimated_repair_hours": 2.5,
+      "sources": [
+        "chiller_system.md#Error code E-214: Product temperature high",
+        "past_incidents.md#INC-2025-031 - Line 1 - Warm product"
+      ]
+    },
+    "impact_report": {
+      "downtime_hours": 2.5,
+      "impact": {
+        "line_id": "L1",
+        "downtime_window": [
+          "2026-09-22T04:54:00",
+          "2026-09-22T07:24:00"
+        ],
+        "lost_cases_by_sku": {
+          "SKU-DIET-12C": 3188
+        },
+        "orders_at_risk": [
+          {
+            "order_id": "SO-10053",
+            "customer": "NorthMart DC 14",
+            "sku": "SKU-DIET-12C",
+            "qty_cases": 1200,
+            "due_date": "2026-09-22T05:00:00",
+            "short_cases": 127
+          },
+          {
+            "order_id": "SO-10014",
+            "customer": "BulkWay DC 2",
+            "sku": "SKU-DIET-12C",
+            "qty_cases": 800,
+            "due_date": "2026-09-22T17:00:00",
+            "short_cases": 63
+          }
+        ]
+      },
+      "summary": "The incident on line L1 starting at 04:54 and lasting 2.5 hours will result in a loss of 3,188 cases of SKU-DIET-12C. Two orders are at risk: order SO-10053 for NorthMart DC 14, with 127 cases short, and order SO-10014 for BulkWay DC 2, with 63 cases short. Immediate attention is needed to minimize the impact on these customers.",
+      "tool_trace": [
+        {
+          "tool": "estimate_impact",
+          "args": {
+            "line_id": "L1",
+            "start_time": "2026-09-22T04:54:00",
+            "downtime_hours": 2.5
+          }
+        }
+      ]
+    }
+  },
+  {
+    "anomaly": {
+      "line_id": "L2",
+      "sensor": "pressure_bar",
+      "detected_at": "2026-09-22T18:41:00",
+      "value": 3.22,
+      "baseline_mean": 3.49,
+      "z_score": -5.4,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-118",
+      "root_cause": "Early-stage CO2 pressure drop likely due to a leak at a CO2 line fitting or regulator diaphragm issue.",
+      "confidence": 0.7,
+      "recommended_actions": [
+        "Check bulk CO2 tank level to ensure it is not running low.",
+        "Perform leak test on CO2 line fittings using soapy water; tighten or replace any leaking fittings.",
+        "If pressure continues to drift after tightening fittings, replace the regulator diaphragm."
+      ],
+      "spare_part": "regulator diaphragm kit (part CR-45)",
+      "estimated_repair_hours": 1.0,
+      "sources": [
+        "carbonation_co2.md#Error code E-118: CO2 pressure low",
+        "carbonation_co2.md#Recommended actions",
+        "past_incidents.md#INC-2026-004 - Line 2 - Flat product"
+      ]
+    },
+    "impact_report": {
+      "downtime_hours": 1.0,
+      "impact": {
+        "line_id": "L2",
+        "downtime_window": [
+          "2026-09-22T18:41:00",
+          "2026-09-22T19:41:00"
+        ],
+        "lost_cases_by_sku": {
+          "SKU-LIME-20P": 1275
+        },
+        "orders_at_risk": [
+          {
+            "order_id": "SO-10035",
+            "customer": "NorthMart DC 14",
+            "sku": "SKU-LIME-20P",
+            "qty_cases": 1200,
+            "due_date": "2026-09-22T19:00:00",
+            "short_cases": 403
+          }
+        ]
+      },
+      "summary": "The incident on line L2 starting at 18:41 on September 22, 2026, with an estimated repair time of 1 hour, is expected to cause a loss of 1275 cases of SKU-LIME-20P. One order at risk is SO-10035 for NorthMart DC 14, with 403 cases short of the 1200 ordered, due by 19:00 the same day. Immediate attention is needed to minimize the impact on this customer order.",
+      "tool_trace": [
+        {
+          "tool": "estimate_impact",
+          "args": {
+            "line_id": "L2",
+            "start_time": "2026-09-22T18:41:00",
+            "downtime_hours": 1
+          }
+        }
+      ]
+    }
+  },
+  {
+    "anomaly": {
+      "line_id": "L3",
+      "sensor": "temperature_c",
+      "detected_at": "2026-09-22T23:04:00",
+      "value": 5.43,
+      "baseline_mean": 4.08,
+      "z_score": 4.9,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-214",
+      "root_cause": "Early-stage product chiller system fault likely due to low refrigerant, compressor trip, glycol pump failure, or fouled plate heat exchanger causing rising product temperature.",
+      "confidence": 0.75,
+      "recommended_actions": [
+        "Inspect chiller refrigerant levels and compressor status.",
+        "Check glycol pump operation and seals for leaks.",
+        "Examine plate heat exchanger for fouling or blockage.",
+        "Monitor temperature trend closely to prevent product quality issues."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 2.5,
+      "sources": [
+        "chiller_system.md#Error code E-214: Product temperature high",
+        "past_incidents.md#INC-2025-031 - Line 1 - Warm product"
+      ]
+    },
+    "impact_report": {
+      "downtime_hours": 2.5,
+      "impact": {
+        "line_id": "L3",
+        "downtime_window": [
+          "2026-09-22T23:04:00",
+          "2026-09-23T01:34:00"
+        ],
+        "lost_cases_by_sku": {
+          "SKU-GING-12G": 1190,
+          "SKU-COLA-8G": 1998
+        },
+        "orders_at_risk": [
+          {
+            "order_id": "SO-10033",
+            "customer": "BulkWay DC 2",
+            "sku": "SKU-COLA-8G",
+            "qty_cases": 3200,
+            "due_date": "2026-09-23T01:00:00",
+            "short_cases": 1275
+          }
+        ]
+      },
+      "summary": "The incident on line L3 starting at 2026-09-22T23:04:00 with an estimated repair time of 2.5 hours will result in a loss of 1190 cases of SKU-GING-12G and 1998 cases of SKU-COLA-8G. One order at risk is SO-10033 for customer BulkWay DC 2, with 1275 cases short out of 3200 due by 2026-09-23T01:00:00. Immediate attention is needed to minimize impact on this critical order.",
+      "tool_trace": [
+        {
+          "tool": "estimate_impact",
+          "args": {
+            "line_id": "L3",
+            "start_time": "2026-09-22T23:04:00",
+            "downtime_hours": 2.5
+          }
+        }
+      ]
+    }
+  },
+  {
+    "anomaly": {
+      "line_id": "L1",
+      "sensor": "filler_speed_bpm",
+      "detected_at": "2026-09-22T23:47:00",
+      "value": 549.9,
+      "baseline_mean": 599.32,
+      "z_score": -6.4,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-402",
+      "root_cause": "Early-stage infeed starvation or jam likely due to containers or guide rails issues causing filler speed to drop.",
+      "confidence": 0.7,
+      "recommended_actions": [
+        "Inspect starwheel and guide rails for jams or damage.",
+        "Check conveyor chain condition and alignment.",
+        "Verify upstream depalletizer operation."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 1.5,
+      "sources": [
+        "past_incidents.md#INC-2026-017 - Line 2 - Speed drop",
+        "conveyor_system.md#Error code E-402: Infeed starvation / jam"
+      ]
+    },
+    "impact_report": {
+      "downtime_hours": 1.5,
+      "impact": {
+        "line_id": "L1",
+        "downtime_window": [
+          "2026-09-22T23:47:00",
+          "2026-09-23T01:17:00"
+        ],
+        "lost_cases_by_sku": {
+          "SKU-DIET-12C": 276,
+          "SKU-COLA-12C": 1636
+        },
+        "orders_at_risk": [
+          {
+            "order_id": "SO-10001",
+            "customer": "NorthMart DC 14",
+            "sku": "SKU-DIET-12C",
+            "qty_cases": 800,
+            "due_date": "2026-09-23T01:00:00",
+            "short_cases": 276
+          }
+        ]
+      },
+      "summary": "The incident on line L1 starting at 2026-09-22T23:47:00 with an estimated repair time of 1.5 hours will result in a loss of 276 cases of SKU-DIET-12C and 1636 cases of SKU-COLA-12C. The order SO-10001 for NorthMart DC 14 is at risk, with 276 cases of SKU-DIET-12C potentially short by the due date of 2026-09-23T01:00:00. Immediate attention is needed to minimize the impact on this key customer order.",
+      "tool_trace": [
+        {
+          "tool": "estimate_impact",
+          "args": {
+            "line_id": "L1",
+            "start_time": "2026-09-22T23:47:00",
+            "downtime_hours": 1.5
+          }
+        }
+      ]
+    }
+  }
+]

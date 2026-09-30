@@ -176,7 +176,7 @@ products = [
 cur.executemany("INSERT INTO products VALUES (?,?,?)", products)
 
 cur.executemany("INSERT INTO inventory VALUES (?,?,?)", [
-    (sku, random.randint(300, 2500), 800) for sku, _, _ in products
+    (sku, random.randint(150, 700), 400) for sku, _, _ in products
 ])
 
 # Which SKUs each line can run
@@ -208,7 +208,7 @@ for i in range(1, 61):
     sku = random.choice(products)[0]
     due = START + timedelta(hours=random.randint(8, DAYS * 24 + 24))
     orders.append((f"SO-{10000 + i}", random.choice(customers), sku,
-                   random.choice([200, 400, 600, 800, 1200]), due.isoformat(), "open"))
+                   random.choice([800, 1200, 1600, 2400, 3200]), due.isoformat(), "open"))
 cur.executemany("INSERT INTO orders VALUES (?,?,?,?,?,?)", orders)
 
 conn.commit()
