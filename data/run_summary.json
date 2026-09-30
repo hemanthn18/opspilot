@@ -1,0 +1,264 @@
+[
+  {
+    "anomaly": {
+      "line_id": "L3",
+      "sensor": "filler_speed_bpm",
+      "detected_at": "2026-09-21T04:28:00",
+      "value": 499.6,
+      "baseline_mean": 599.3,
+      "z_score": -14.6,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-402",
+      "root_cause": "Early-stage infeed starvation or jam at the starwheel likely caused by containers jamming or guide rails misalignment, leading to a sharp drop in filler speed.",
+      "confidence": 0.7,
+      "recommended_actions": [
+        "Inspect starwheel area for jammed or damaged containers.",
+        "Check conveyor chain and guide rails for wear or misalignment.",
+        "Verify upstream depalletizer operation to ensure it is running properly."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 1.5,
+      "sources": [
+        "past_incidents.md#INC-2026-017 - Line 2 - Speed drop",
+        "conveyor_system.md#Error code E-402: Infeed starvation / jam"
+      ]
+    },
+    "action_plan": {
+      "priority": "P2",
+      "ticket_title": "Starwheel Infeed Starvation and Jam on Line L3",
+      "maintenance_steps": [
+        "Inspect starwheel area for jammed or damaged containers.",
+        "Check conveyor chain and guide rails for wear or misalignment.",
+        "Verify upstream depalletizer operation to ensure it is running properly."
+      ],
+      "spare_part": null,
+      "planner_recommendation": "Adjust production schedule to recover lost volume of SKU-GING-12G due to 1.5-hour downtime on Line L3.",
+      "customers_to_notify": []
+    },
+    "outcome": "approved - ticket created",
+    "ticket_id": 2
+  },
+  {
+    "anomaly": {
+      "line_id": "L2",
+      "sensor": "vibration_mm_s",
+      "detected_at": "2026-09-21T07:05:00",
+      "value": 2.73,
+      "baseline_mean": 1.98,
+      "z_score": 4.2,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-331",
+      "root_cause": "Early-stage main drive bearing wear or lack of lubrication causing increased vibration.",
+      "confidence": 0.7,
+      "recommended_actions": [
+        "Inspect main drive bearings for wear or lubrication issues.",
+        "Check alignment of drive coupling.",
+        "Verify mounting bolts are tight."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 2.0,
+      "sources": [
+        "filler_bearings.md#Error code E-331: Vibration high",
+        "filler_bearings.md#Normal operation"
+      ]
+    },
+    "action_plan": {
+      "priority": "P1",
+      "ticket_title": "Urgent Maintenance on Line L2 Main Drive Bearings to Prevent Further Production Loss and Order Shortfall",
+      "maintenance_steps": [
+        "Inspect main drive bearings for wear or lubrication issues.",
+        "Check alignment of drive coupling.",
+        "Verify mounting bolts are tight."
+      ],
+      "spare_part": null,
+      "planner_recommendation": "Prioritize production of SKU-COLA-2LP to fulfill remaining quantity for order SO-10044 as soon as line L2 is operational.",
+      "customers_to_notify": [
+        "SO-10044"
+      ]
+    },
+    "outcome": "rejected - unknown",
+    "ticket_id": null
+  },
+  {
+    "anomaly": {
+      "line_id": "L1",
+      "sensor": "temperature_c",
+      "detected_at": "2026-09-22T04:54:00",
+      "value": 5.58,
+      "baseline_mean": 4.09,
+      "z_score": 4.6,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-214",
+      "root_cause": "Early-stage product temperature rise likely due to chiller system issues such as low refrigerant, compressor trip, glycol pump failure, or fouled plate heat exchanger.",
+      "confidence": 0.75,
+      "recommended_actions": [
+        "Inspect chiller refrigerant levels and compressor status.",
+        "Check glycol pump operation and seals for leaks.",
+        "Examine plate heat exchanger for fouling or blockage.",
+        "Monitor temperature trend closely and prepare for potential E-214 error code if temperature continues to rise."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 2.5,
+      "sources": [
+        "chiller_system.md#Error code E-214: Product temperature high",
+        "past_incidents.md#INC-2025-031 - Line 1 - Warm product"
+      ]
+    },
+    "action_plan": {
+      "priority": "P1",
+      "ticket_title": "Urgent: Chiller System Issue Causing Product Temperature Rise on Line L1",
+      "maintenance_steps": [
+        "Inspect chiller refrigerant levels and compressor status.",
+        "Check glycol pump operation and seals for leaks.",
+        "Examine plate heat exchanger for fouling or blockage.",
+        "Monitor temperature trend closely and prepare for potential E-214 error code if temperature continues to rise."
+      ],
+      "spare_part": null,
+      "planner_recommendation": "Prioritize production recovery on Line L1 to fulfill orders SO-10053 and SO-10014 as soon as possible. Adjust schedules to minimize short shipments and communicate delays to customers.",
+      "customers_to_notify": [
+        "SO-10053",
+        "SO-10014"
+      ]
+    },
+    "outcome": "approved - ticket created",
+    "ticket_id": 3
+  },
+  {
+    "anomaly": {
+      "line_id": "L2",
+      "sensor": "pressure_bar",
+      "detected_at": "2026-09-22T18:41:00",
+      "value": 3.22,
+      "baseline_mean": 3.49,
+      "z_score": -5.4,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-118",
+      "root_cause": "Early-stage CO2 pressure drop likely due to a leak at a CO2 line fitting or regulator diaphragm issue, as pressure is trending downward and approaching the low pressure threshold causing flat product.",
+      "confidence": 0.7,
+      "recommended_actions": [
+        "Check bulk CO2 tank level to ensure it is not running low.",
+        "Perform leak test on CO2 line fittings using soapy water; tighten or replace any leaking fittings.",
+        "If pressure continues to drift after tightening fittings, replace the regulator diaphragm."
+      ],
+      "spare_part": "regulator diaphragm kit (part CR-45)",
+      "estimated_repair_hours": 1.0,
+      "sources": [
+        "carbonation_co2.md#Error code E-118: CO2 pressure low",
+        "past_incidents.md#INC-2026-004 - Line 2 - Flat product",
+        "carbonation_co2.md#Recommended actions"
+      ]
+    },
+    "action_plan": {
+      "priority": "P1",
+      "ticket_title": "Urgent Repair of CO2 Pressure Drop on Line L2 Affecting Order SO-10035",
+      "maintenance_steps": [
+        "Check bulk CO2 tank level to ensure it is not running low.",
+        "Perform leak test on CO2 line fittings using soapy water; tighten or replace any leaking fittings.",
+        "If pressure continues to drift after tightening fittings, replace the regulator diaphragm using part CR-45."
+      ],
+      "spare_part": "regulator diaphragm kit (part CR-45)",
+      "planner_recommendation": "Prioritize production of order SO-10035 after repair to fulfill the shortfall of 403 cases as soon as possible.",
+      "customers_to_notify": [
+        "SO-10035"
+      ]
+    },
+    "outcome": "approved - ticket created",
+    "ticket_id": 4
+  },
+  {
+    "anomaly": {
+      "line_id": "L3",
+      "sensor": "temperature_c",
+      "detected_at": "2026-09-22T23:04:00",
+      "value": 5.43,
+      "baseline_mean": 4.08,
+      "z_score": 4.9,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-214",
+      "root_cause": "Early-stage product chiller system fault likely due to low refrigerant, compressor trip, glycol pump failure, or fouled plate heat exchanger causing rising product temperature.",
+      "confidence": 0.75,
+      "recommended_actions": [
+        "Inspect chiller refrigerant levels and compressor status.",
+        "Check glycol pump operation and seals for leaks.",
+        "Examine plate heat exchanger for fouling and clean if necessary.",
+        "Monitor temperature trend closely to prevent product quality issues."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 2.5,
+      "sources": [
+        "chiller_system.md#Error code E-214: Product temperature high",
+        "past_incidents.md#INC-2025-031 - Line 1 - Warm product"
+      ]
+    },
+    "action_plan": {
+      "priority": "P1",
+      "ticket_title": "Urgent Repair of Chiller System Fault on Line L3 to Prevent Product Quality Issues and Order Shortfall",
+      "maintenance_steps": [
+        "Inspect chiller refrigerant levels and compressor status.",
+        "Check glycol pump operation and seals for leaks.",
+        "Examine plate heat exchanger for fouling and clean if necessary.",
+        "Monitor temperature trend closely to prevent product quality issues."
+      ],
+      "spare_part": null,
+      "planner_recommendation": "Prioritize production of order SO-10033 immediately after repair to fulfill the shortfall of 1275 cases. Adjust schedule to minimize further delays.",
+      "customers_to_notify": [
+        "SO-10033"
+      ]
+    },
+    "outcome": "approved - ticket created",
+    "ticket_id": 5
+  },
+  {
+    "anomaly": {
+      "line_id": "L1",
+      "sensor": "filler_speed_bpm",
+      "detected_at": "2026-09-22T23:47:00",
+      "value": 549.9,
+      "baseline_mean": 599.32,
+      "z_score": -6.4,
+      "error_code_seen": null
+    },
+    "diagnosis": {
+      "likely_error_code": "E-402",
+      "root_cause": "Early-stage infeed starvation or jam likely due to containers starting to jam the starwheel or conveyor issues, causing the filler speed to drop significantly.",
+      "confidence": 0.7,
+      "recommended_actions": [
+        "Inspect starwheel and conveyor for jams or damaged containers.",
+        "Check guide rails for proper adjustment and wear.",
+        "Verify upstream depalletizer operation."
+      ],
+      "spare_part": null,
+      "estimated_repair_hours": 1.5,
+      "sources": [
+        "past_incidents.md#INC-2026-017 - Line 2 - Speed drop",
+        "conveyor_system.md#Error code E-402: Infeed starvation / jam"
+      ]
+    },
+    "action_plan": {
+      "priority": "P1",
+      "ticket_title": "Urgent: Infeed Starvation/Jam on Line L1 Causing Order SO-10001 Shortfall",
+      "maintenance_steps": [
+        "Inspect starwheel and conveyor for jams or damaged containers.",
+        "Check guide rails for proper adjustment and wear.",
+        "Verify upstream depalletizer operation."
+      ],
+      "spare_part": null,
+      "planner_recommendation": "Prioritize production of SKU-DIET-12C to fulfill remaining quantity of order SO-10001 as soon as line is operational.",
+      "customers_to_notify": [
+        "SO-10001"
+      ]
+    },
+    "outcome": "approved - ticket created",
+    "ticket_id": 6
+  }
+]
